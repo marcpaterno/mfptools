@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{augment_bins}
 \alias{augment_bins}
-\title{Augment a dataframe with columns to allow plotting of conditioned box plots.}
+\title{Augment a dataframe}
 \usage{
 augment_bins(df, var, nbins = 25)
 }
@@ -18,5 +18,8 @@ a tibble with two new columns, for the var's bin number and the var's
          median
 }
 \description{
-Augment a dataframe with columns to allow plotting of conditioned box plots.
+Augment a dataframe with the median of a variable in each bin, and with a
+bin identifier for that variable. The bin sizes are chosen by
+`ggplot2::cut_number` so that there will be have approximately equal counts
+in each bin.
 }

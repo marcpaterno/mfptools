@@ -15,5 +15,5 @@ x \%nin\% table
 a vector of the same length as x
 }
 \description{
-`%nin%` is a negated version of `%in%`;.
+This operator is a negated version of \%in\%.
 }
