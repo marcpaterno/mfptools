@@ -20,3 +20,5 @@ Imports:
     read.so,
     rlang,
     stats
+Remotes:
+    alistaire47/read.so
