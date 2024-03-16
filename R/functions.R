@@ -57,10 +57,11 @@ augment_bins <- function(df, var, nbins=25)
 #'
 #' @return a tibble
 #' @export
+#' @importFrom read.so read_md
 #'
 read_benchmark <- function(filename)
 {
-  d <- read.so::read_md(filename)
+  d <- read_md(filename)
   # Keep only the interesting columns
   d <- d[,c(1,3,4,7,10)]
   names(d) <- c("t","err","ins","branches", "name")
