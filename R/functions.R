@@ -62,15 +62,16 @@ augment_bins <- function(df, var, nbins=25)
 read_benchmark <- function(filename)
 {
   d <- read_md(filename)
-  # Keep only the interesting columns
-  #d <- d[,c(1,3,4,7,10)]
-  names(d) <- c("time", "op_sec", "err_frac", "instructions_op", "cycles_op", "ipc", "branches_op", "miss_frac", "total", "name")
+  if(length(d) == 10) {
+    names(d) <- c("time", "op_sec", "err_frac", "instructions_op", "cycles_op", "ipc", "branches_op", "miss_frac", "total", "name")
+    d$miss_frac <- as.numeric(sub("%", "", d$miss_frac))/100
+  }
+  if (length(d) == 5)
+  {
+    names(d) <- c("time", "op_sec","err_frac", "total", "name")
+  }
   d$err_frac <- as.numeric(sub("%","",d$err_frac))/100
-  # mutate(d,
-  #        ins = as.integer(.data$ins),
-  #        branches = as.integer(.data$branches),
-  #        name = gsub("`","",.data$name, fixed=TRUE),
-  #        name = factor(.data$name))
+  d$name <- gsub("`", "", d$name, fixed=TRUE)
   d
 }
 
