@@ -63,14 +63,15 @@ read_benchmark <- function(filename)
 {
   d <- read_md(filename)
   # Keep only the interesting columns
-  d <- d[,c(1,3,4,7,10)]
-  names(d) <- c("t","err","ins","branches", "name")
-  d$err <- as.numeric(sub("%","",d$err))/100
-  mutate(d,
-         ins = as.integer(.data$ins),
-         branches = as.integer(.data$branches),
-         name = gsub("`","",.data$name, fixed=TRUE),
-         name = factor(.data$name))
+  #d <- d[,c(1,3,4,7,10)]
+  names(d) <- c("time", "op_sec", "err_frac", "instructions_op", "cycles_op", "ipc", "branches_op", "miss_frac", "total", "name")
+  d$err_frac <- as.numeric(sub("%","",d$err_frac))/100
+  # mutate(d,
+  #        ins = as.integer(.data$ins),
+  #        branches = as.integer(.data$branches),
+  #        name = gsub("`","",.data$name, fixed=TRUE),
+  #        name = factor(.data$name))
+  d
 }
 
 #' Convenience functions for calling grep

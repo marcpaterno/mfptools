@@ -13,4 +13,10 @@ test_that("nin works", {
 })
 
 
-
+test_that("reading linux nanobench output works", {
+  x <- read_benchmark(test_path("testdata", "gcc-12-skylake.txt"))
+  expect_s3_class(x, "tbl_df")
+  expect_length(x, 10)
+  expect_named(x, c("time", "op_sec", "err_frac", "instructions_op", "cycles_op", "ipc", "branches_op", "miss_frac", "total", "name"))
+  expect_true(all(x$err_frac <= 1.0))
+})
