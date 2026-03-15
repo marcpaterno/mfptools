@@ -1,0 +1,85 @@
+---
+title: "geom_hist: Histogram with Points"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{geom_hist: Histogram with Points}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Introduction
+
+The `geom_hist()` function is a variant of `geom_histogram()` that displays histogram bin counts using points instead of bars. This can be useful when you want to emphasize the bin counts rather than the bar heights, or when you want to overlay multiple histograms without bar overlap.
+
+## Basic Usage
+
+The simplest use of `geom_hist()` requires only an x aesthetic:
+
+```{r, message=FALSE, warning=FALSE}
+library(mfptools)
+library(ggplot2)
+
+ggplot(mtcars, aes(mpg)) +
+  geom_hist(bins = 20)
+```
+
+## Log Scale for Large Dynamic Range
+
+When bin counts span several orders of magnitude, using a log scale on the y-axis can make the differences more visible:
+
+```{r, message=FALSE, warning=FALSE}
+# Create a dataset with large dynamic range
+set.seed(42)
+data_large <- data.frame(
+  value = c(
+    rnorm(10000, mean = 50),
+    rnorm(1000, mean = 100),
+    rnorm(100, mean = 150)
+  )
+)
+
+ggplot(data_large, aes(value)) +
+  geom_hist(bins = 30) +
+  scale_y_log10()
+```
+
+## Customizing the Y Aesthetic
+
+You can also use other computed variables like `density`:
+
+```{r, message=FALSE, warning=FALSE}
+ggplot(mtcars, aes(mpg)) +
+  geom_hist(aes(y = after_stat(density)), bins = 20)
+```
+
+## Dropping Zero Counts
+
+By default, `geom_hist()` drops bins with zero counts (`drop.zeros = TRUE`). You can include them by setting `drop.zeros = FALSE`:
+
+```{r, message=FALSE, warning=FALSE}
+# Create data with gaps
+data_gaps <- data.frame(
+  x = c(1:5, 10:15)
+)
+
+ggplot(data_gaps, aes(x)) +
+  geom_hist(bins = 10, drop.zeros = FALSE)
+```
+
+## Position Adjustment
+
+Like other geoms, you can use position adjustments to overlay multiple histograms:
+
+```{r, message=FALSE, warning=FALSE}
+ggplot(mtcars, aes(mpg, colour = factor(cyl))) +
+  geom_hist(bins = 20, position = "identity", alpha = 0.5)
+```

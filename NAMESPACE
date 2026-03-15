@@ -2,6 +2,7 @@
 
 export("%nin%")
 export(augment_bins)
+export(geom_hist)
 export(like)
 export(read_benchmark)
 importFrom(dplyr,group_by)
