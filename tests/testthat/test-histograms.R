@@ -3,16 +3,9 @@ test_that("geom_hist returns a layer", {
   expect_s3_class(p, "LayerInstance")
 })
 
-test_that("geom_hist has correct default y aesthetic with drop.zeros = TRUE", {
+test_that("geom_hist uses correct default y aesthetic", {
   p <- geom_hist()
-  # When drop.zeros = TRUE (default), y should use ifelse(count > 0, count, NA_real_)
-  expected_aes <- ggplot2::aes(y = after_stat(ifelse(count > 0, count, NA_real_)))
-  expect_equal(p$mapping, expected_aes)
-})
-
-test_that("geom_hist uses correct default y aesthetic with drop.zeros = FALSE", {
-  p <- geom_hist(drop.zeros = FALSE)
-  # When drop.zeros = FALSE, y should use count directly
+  # y should use count
   expected_aes <- ggplot2::aes(y = after_stat(count))
   expect_equal(p$mapping, expected_aes)
 })
@@ -57,7 +50,7 @@ test_that("geom_hist works with data argument", {
 test_that("geom_hist handles NULL mapping correctly", {
   p <- geom_hist(mapping = NULL)
   # When mapping is NULL, it should use default_y
-  expected_aes <- ggplot2::aes(y = after_stat(ifelse(count > 0, count, NA_real_)))
+  expected_aes <- ggplot2::aes(y = after_stat(count))
   expect_equal(p$mapping, expected_aes)
 })
 

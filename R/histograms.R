@@ -35,11 +35,7 @@ geom_hist <- function(mapping = NULL,
                       show.legend = NA,
                       inherit.aes = TRUE) {
     # Default y aesthetic
-    default_y <- if (drop.zeros) {
-        ggplot2::aes(y = after_stat(ifelse(count > 0, count, NA_real_)))
-    } else {
-        ggplot2::aes(y = after_stat(count))
-    }
+    default_y <- ggplot2::aes(y = after_stat(count))
 
     # Merge user mapping with default
     if (is.null(mapping)) {
